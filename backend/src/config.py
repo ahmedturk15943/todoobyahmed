@@ -90,6 +90,15 @@ class Settings(BaseSettings):
                 return False
         return v
 
+    @field_validator('log_level', 'jwt_algorithm', 'cors_origins', 'database_url',
+                     'better_auth_secret', 'openai_api_key', 'gemini_api_key', mode='before')
+    @classmethod
+    def strip_string_fields(cls, v):
+        """Strip whitespace from string fields."""
+        if isinstance(v, str):
+            return v.strip()
+        return v
+
     @property
     def cors_origins_list(self) -> List[str]:
         return [origin.strip() for origin in self.cors_origins.split(",")]
