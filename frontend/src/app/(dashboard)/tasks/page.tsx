@@ -265,8 +265,9 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import apiClient, { clearAuthToken } from '@/lib/api'
+import apiClient from '@/lib/api'
 import { getCurrentUser } from '@/lib/auth'
+import Navigation from '@/components/Navigation'
 import TaskList from '@/components/tasks/TaskList'
 import TaskForm from '@/components/tasks/TaskForm'
 import type { Task } from '@/types/task'
@@ -306,11 +307,6 @@ export default function TasksPage() {
     }
   }
 
-  const handleSignOut = () => {
-    clearAuthToken()
-    router.push('/')
-  }
-
   const handleTaskCreated = (newTask: Task) => {
     setTasks(prev => [newTask, ...prev])
     setShowForm(false)
@@ -328,17 +324,7 @@ export default function TasksPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">My Tasks</h1>
-          <div className="flex items-center space-x-4">
-            <span className="text-sm text-gray-600">{currentUser.email}</span>
-            <button onClick={handleSignOut} className="btn-secondary text-sm">
-              Sign Out
-            </button>
-          </div>
-        </div>
-      </header>
+      <Navigation />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-6">

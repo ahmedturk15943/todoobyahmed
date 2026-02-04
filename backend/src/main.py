@@ -79,7 +79,55 @@ async def health_check():
 
 
 # Import and include routers
-from .api.routes import auth, tasks
+from .api.routes import auth, tasks, chat
 
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(tasks.router, prefix="/api/users", tags=["Tasks"])
+app.include_router(chat.router, tags=["Chat"])
+
+
+
+
+
+
+
+
+
+
+
+# from pydantic_settings import BaseSettings, SettingsConfigDict
+# from typing import List
+# import os
+# from dotenv import load_dotenv
+
+# # Load .env early so all subprocesses can see variables
+# load_dotenv()
+
+# class Settings(BaseSettings):
+#     """Application settings loaded from environment variables."""
+
+#     database_url: str
+#     openai_api_key: str
+#     better_auth_secret: str
+#     jwt_algorithm: str = "HS256"
+#     jwt_expiry_days: int = 7
+#     cors_origins: str = "http://localhost:3000"
+#     debug: bool = False
+#     log_level: str = "INFO"
+
+#     model_config = SettingsConfigDict(
+#         env_file=".env",
+#         env_file_encoding="utf-8",
+#         case_sensitive=False,
+#     )
+
+#     @property
+#     def cors_origins_list(self) -> List[str]:
+#         return [origin.strip() for origin in self.cors_origins.split(",")]
+
+# # Global settings instance
+# settings = Settings()
+
+# # Optional: quick check
+# if not settings.openai_api_key:
+#     raise ValueError("OPENAI_API_KEY not set in .env")
